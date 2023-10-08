@@ -3,19 +3,19 @@
 require_relative "lib/auth/logic/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "auth-logic"
+  spec.name = "authentication-logic"
   spec.version = Authentication::Logic::VERSION
   spec.authors = ["Vincent Girard"]
   spec.email = ["vinccool96@gmail.com"]
 
   spec.summary = "An unobtrusive ruby authentication library based on ActiveRecord."
-  spec.homepage = "https://github.com/Vinccool96/auth-logic"
+  spec.homepage = "https://github.com/Vinccool96/authentication-logic"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/Vinccool96/auth-logic"
-  # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/Vinccool96/authentication-logic"
+  spec.metadata["changelog_uri"] = "https://github.com/Vinccool96/authentication-logic/blob/master/CHANGELOG.md"
 
   spec.add_dependency "activemodel", [">= 7.1"]
   spec.add_dependency "activerecord", [">= 7.1"]
