@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # This is one of my favorite features that I think is pretty cool. It's
       # things like this that make a library great and let you know you are on the
       # right track.
       #
-      # Just to clear up any confusion, Auth::Logic stores both the record id and
+      # Just to clear up any confusion, Authentication::Logic stores both the record id and
       # the persistence token in the session. Why? So stale sessions can not be
       # persisted. It stores the id so it can quickly find the record, and the
       # persistence token to ensure no sessions are stale. So if the persistence
@@ -56,7 +56,7 @@ module Auth
           alias log_in_after_password_change= log_in_after_password_change
 
           # As you may know, auth-logic sessions can be separate by id (See
-          # Auth::Logic::Session::Base#id). You can specify here what session ids
+          # Authentication::Logic::Session::Base#id). You can specify here what session ids
           # you want auto maintained. By default it is the main session, which has
           # an id of nil.
           #

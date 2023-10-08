@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module Session
       module MagicColumn
@@ -13,7 +13,7 @@ module Auth
         #
         # - current_time - a `Time`
         # - record - eg. a `User`
-        # - controller - an `Auth::Logic::ControllerAdapters::AbstractAdapter`
+        # - controller - an `Authentication::Logic::ControllerAdapters::AbstractAdapter`
         # - last_request_at_threshold - integer - seconds
         #
         # @api private

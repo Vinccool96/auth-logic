@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
-    # This class allows any message in Auth::Logic to use internationalization. In
-    # earlier versions of Auth::Logic each message was translated via configuration.
-    # This cluttered up the configuration and cluttered up Auth::Logic. So all
+    # This class allows any message in Authentication::Logic to use internationalization. In
+    # earlier versions of Authentication::Logic each message was translated via configuration.
+    # This cluttered up the configuration and cluttered up Authentication::Logic. So all
     # translation has been extracted out into this class. Now all messages pass
     # through this class, making it much easier to implement in I18n library /
-    # plugin you want. Use this as a layer that sits between Auth::Logic and
+    # plugin you want. Use this as a layer that sits between Authentication::Logic and
     # whatever I18n library you want to use.
     #
     # By default this uses the rails I18n library, if it exists. If it doesn't
-    # exist it just returns the default English message. The Auth::Logic I18n class
+    # exist it just returns the default English message. The Authentication::Logic I18n class
     # works EXACTLY like the rails I18n class. This is because the arguments are
     # delegated to this class.
     #
-    # Here is how all messages are translated internally with Auth::Logic:
+    # Here is how all messages are translated internally with Authentication::Logic:
     #
-    #   Auth::Logic::I18n.t('error_messages.password_invalid', :default => "is invalid")
+    #   Authentication::Logic::I18n.t('error_messages.password_invalid', :default => "is invalid")
     #
     # If you use a different I18n library just replace the build-in
     # I18n::Translator class with your own. For example:
     #
-    #   class MyAuth::LogicI18nTranslator
+    #   class MyAuthentication::LogicI18nTranslator
     #     def translate(key, options = {})
     #       # you will have key which will be something like:
     #       # "error_messages.password_invalid"
@@ -32,12 +32,12 @@ module Auth
     #     end
     #   end
     #
-    #   Auth::Logic::I18n.translator = MyAuth::LogicI18nTranslator.new
+    #   Authentication::Logic::I18n.translator = MyAuthentication::LogicI18nTranslator.new
     #
     # That it's! Here is a complete list of the keys that are passed. Just define
     # these however you wish:
     #
-    #   Auth::Logic:
+    #   Authentication::Logic:
     #     error_messages:
     #       login_blank: can not be blank
     #       login_not_found: is not valid

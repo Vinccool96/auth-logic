@@ -2,10 +2,10 @@
 
 require "scrypt"
 
-module Auth
+module Authentication
   module Logic
     module CryptoProviders
-      # SCrypt is the default provider for Auth::Logic. It is the only
+      # SCrypt is the default provider for Authentication::Logic. It is the only
       # choice in the adaptive hash family that accounts for hardware
       # based attacks by compensating with memory bound as well as cpu
       # bound computational constraints. It offers the same guarantees
@@ -18,7 +18,7 @@ module Auth
       # Tell acts_as_authentic to use it:
       #
       #   acts_as_authentic do |c|
-      #     c.crypto_provider = Auth::Logic::CryptoProviders::SCrypt
+      #     c.crypto_provider = Authentication::Logic::CryptoProviders::SCrypt
       #   end
       class SCrypt
         class << self

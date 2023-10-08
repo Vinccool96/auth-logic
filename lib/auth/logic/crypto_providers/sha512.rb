@@ -2,7 +2,7 @@
 
 require "digest/sha2"
 
-module Auth
+module Authentication
   module Logic
     module CryptoProviders
       # SHA-512 does not have any practical known attacks against it. However,

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # This module is responsible for maintaining the single_access token. For
@@ -59,7 +59,7 @@ module Auth
           module InstanceMethods
             # Resets the single_access_token to a random friendly token.
             def reset_single_access_token
-              self.single_access_token = Auth::Logic::Random.friendly_token
+              self.single_access_token = Authentication::Logic::Random.friendly_token
             end
 
             # same as reset_single_access_token, but then saves the record.

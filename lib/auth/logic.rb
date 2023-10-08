@@ -38,7 +38,7 @@ end
 require "#{path}controller_adapters/rails_adapter"   if defined?(Rails)
 require "#{path}controller_adapters/sinatra_adapter" if defined?(Sinatra)
 
-module Auth
+module Authentication
   module Logic
     class Error < StandardError; end
     # Your code goes here...

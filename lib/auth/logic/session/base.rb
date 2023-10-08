@@ -2,7 +2,7 @@
 
 require "request_store"
 
-module Auth
+module Authentication
   module Logic
     module Session
       module Activation
@@ -10,7 +10,7 @@ module Auth
         class NotActivatedError < ::StandardError
           def initialize
             super(
-              "You must activate the Auth::Logic::Session::Base.controller with " \
+              "You must activate the Authentication::Logic::Session::Base.controller with " \
                   "a controller object before creating objects"
             )
           end
@@ -31,7 +31,7 @@ module Auth
         end
       end
 
-      # This is the most important class in Auth::Logic. You will inherit this class
+      # This is the most important class in Authentication::Logic. You will inherit this class
       # for your own eg. `UserSession`.
       #
       # Ongoing consolidation of modules
@@ -49,16 +49,16 @@ module Auth
       # Activation
       # ==========
       #
-      # Activating Auth::Logic requires that you pass it an
-      # Auth::Logic::ControllerAdapters::AbstractAdapter object, or a class that
+      # Activating Authentication::Logic requires that you pass it an
+      # Authentication::Logic::ControllerAdapters::AbstractAdapter object, or a class that
       # extends it. This is sort of like a database connection for an ORM library,
-      # Auth::Logic can't do anything until it is "connected" to a controller. If
-      # you are using a supported framework, Auth::Logic takes care of this for you.
+      # Authentication::Logic can't do anything until it is "connected" to a controller. If
+      # you are using a supported framework, Authentication::Logic takes care of this for you.
       #
       # ActiveRecord Trickery
       # =====================
       #
-      # Auth::Logic looks like ActiveRecord, sounds like ActiveRecord, but its not
+      # Authentication::Logic looks like ActiveRecord, sounds like ActiveRecord, but its not
       # ActiveRecord. That's the goal here. This is useful for the various rails
       # helper methods such as form_for, error_messages_for, or any method that
       # expects an ActiveRecord object. The point is to disguise the object as an
@@ -85,7 +85,7 @@ module Auth
       # something is not right. If you wish to lower this number just set the configuration
       # to a lower number:
       #
-      #   class UserSession < Auth::Logic::Session::Base
+      #   class UserSession < Authentication::Logic::Session::Base
       #     consecutive_failed_logins_limit 10
       #   end
       #
@@ -93,17 +93,17 @@ module Auth
       # =========
       #
       # Between these callbacks and the configuration, this is the contract between me and
-      # you to safely modify Auth::Logic's behavior. I will do everything I can to make sure
+      # you to safely modify Authentication::Logic's behavior. I will do everything I can to make sure
       # these do not change.
       #
-      # Check out the sub modules of Auth::Logic::Session. They are very concise, clear, and
+      # Check out the sub modules of Authentication::Logic::Session. They are very concise, clear, and
       # to the point. More importantly they use the same API that you would use to extend
-      # Auth::Logic. That being said, they are great examples of how to extend Auth::Logic and
-      # add / modify behavior to Auth::Logic. These modules could easily be pulled out into
+      # Authentication::Logic. That being said, they are great examples of how to extend Authentication::Logic and
+      # add / modify behavior to Authentication::Logic. These modules could easily be pulled out into
       # their own plugin and become an "add on" without any change.
       #
       # Now to the point of this module. Just like in ActiveRecord you have before_save,
-      # before_validation, etc. You have similar callbacks with Auth::Logic, see the METHODS
+      # before_validation, etc. You have similar callbacks with Authentication::Logic, see the METHODS
       # constant below. The order of execution is as follows:
       #
       #   before_persisting
@@ -134,19 +134,19 @@ module Auth
       #
       # Notice the "save record if has_changes_to_save" lines above. This helps with performance. If
       # you need to make changes to the associated record, there is no need to save the
-      # record, Auth::Logic will do it for you. This allows multiple modules to modify the
+      # record, Authentication::Logic will do it for you. This allows multiple modules to modify the
       # record and execute as few queries as possible.
       #
       # **WARNING**: unlike ActiveRecord, these callbacks must be set up on the class level:
       #
-      #   class UserSession < Auth::Logic::Session::Base
+      #   class UserSession < Authentication::Logic::Session::Base
       #     before_validation :my_method
       #     validate :another_method
       #     # ..etc
       #   end
       #
       # You can NOT define a "before_validation" method, this is bad practice and does not
-      # allow Auth::Logic to extend properly with multiple extensions. Please ONLY use the
+      # allow Authentication::Logic to extend properly with multiple extensions. Please ONLY use the
       # method above.
       #
       # HTTP Basic Authentication
@@ -164,7 +164,7 @@ module Auth
       # =============
       #
       # Just like ActiveRecord has "magic" columns, such as: created_at and updated_at.
-      # Auth::Logic has its own "magic" columns too:
+      # Authentication::Logic has its own "magic" columns too:
       #
       # * login_count - Increased every time an explicit login is made. This will *NOT*
       #   increase if logging in by a session, cookie, or basic http auth
@@ -188,7 +188,7 @@ module Auth
       #
       # Think about financial websites, if you are inactive for a certain period
       # of time you will be asked to log back in on your next request. You can do
-      # this with Auth::Logic easily, there are 2 parts to this:
+      # this with Authentication::Logic easily, there are 2 parts to this:
       #
       # 1. Define the timeout threshold:
       #
@@ -198,7 +198,7 @@ module Auth
       #
       # 2. Enable logging out on timeouts
       #
-      #   class UserSession < Auth::Logic::Session::Base
+      #   class UserSession < Authentication::Logic::Session::Base
       #     logout_on_timeout true # default is false
       #   end
       #
@@ -217,8 +217,8 @@ module Auth
       #
       # Notice the token in the URL, this is a single access token. A single access token is
       # used for single access only, it is not persisted. Meaning the user provides it,
-      # Auth::Logic grants them access, and that's it. If they want access again they need to
-      # provide the token again. Auth::Logic will *NEVER* try to persist the session after
+      # Authentication::Logic grants them access, and that's it. If they want access again they need to
+      # provide the token again. Authentication::Logic will *NEVER* try to persist the session after
       # authenticating through this method.
       #
       # For added security, this token is *ONLY* allowed for RSS and ATOM requests. You can
@@ -245,7 +245,7 @@ module Auth
       # reset it after a session have been saved, just keep it changing. The more
       # it changes, the tighter the security.
       #
-      # See Auth::Logic::ActsAsAuthentic::PerishableToken for more information.
+      # See Authentication::Logic::ActsAsAuthentic::PerishableToken for more information.
       #
       # Scopes
       # ======
@@ -260,12 +260,12 @@ module Auth
       #
       #   UserSession.create(my_user_object)
       #
-      # Be careful with this, because Auth::Logic is assuming that you have already
+      # Be careful with this, because Authentication::Logic is assuming that you have already
       # confirmed that the user is who he says he is.
       #
       # For example, this is the method used to persist the session internally.
-      # Auth::Logic finds the user with the persistence token. At this point we know
-      # the user is who he says he is, so Auth::Logic just creates a session with
+      # Authentication::Logic finds the user with the persistence token. At this point we know
+      # the user is who he says he is, so Authentication::Logic just creates a session with
       # the record. This is particularly useful for 3rd party authentication
       # methods, such as OpenID. Let that method verify the identity, once it's
       # verified, pass the object and create a session.
@@ -273,7 +273,7 @@ module Auth
       # Magic States
       # ============
       #
-      # Auth::Logic tries to check the state of the record before creating the session. If
+      # Authentication::Logic tries to check the state of the record before creating the session. If
       # your record responds to the following methods and any of them return false,
       # validation will fail:
       #
@@ -282,8 +282,8 @@ module Auth
       #   approved?             Has the record been approved?
       #   confirmed?            Has the record been confirmed?
       #
-      # Auth::Logic does nothing to define these methods for you, its up to you to define what
-      # they mean. If your object responds to these methods Auth::Logic will use them,
+      # Authentication::Logic does nothing to define these methods for you, its up to you to define what
+      # they mean. If your object responds to these methods Authentication::Logic will use them,
       # otherwise they are ignored.
       #
       # What's neat about this is that these are checked upon any type of login. When
@@ -291,13 +291,13 @@ module Auth
       # inactive in the middle of their session they wont be logged back in next time they
       # refresh the page. Giving you complete control.
       #
-      # Need Auth::Logic to check your own "state"? No problem, check out the hooks section
+      # Need Authentication::Logic to check your own "state"? No problem, check out the hooks section
       # below. Add in a before_validation to do your own checking. The sky is the limit.
       #
       # Validation
       # ==========
       #
-      # The errors in Auth::Logic work just like ActiveRecord. In fact, it uses
+      # The errors in Authentication::Logic work just like ActiveRecord. In fact, it uses
       # the `ActiveModel::Errors` class. Use it the same way:
       #
       # ```
@@ -319,19 +319,19 @@ module Auth
       class Base
         extend ActiveModel::Naming
         extend ActiveModel::Translation
-        extend Auth::Logic::Config
+        extend Authentication::Logic::Config
         include ActiveSupport::Callbacks
 
         E_AC_PARAMETERS = <<~EOS
-          Passing an ActionController::Parameters to Auth::Logic is not allowed.
+          Passing an ActionController::Parameters to Authentication::Logic is not allowed.
 
-          In Auth::Logic 3, especially during the transition of rails to Strong
-          Parameters, it was common for Auth::Logic users to forget to `permit`
-          their params. They would pass their params into Auth::Logic, we'd call
+          In Authentication::Logic 3, especially during the transition of rails to Strong
+          Parameters, it was common for Authentication::Logic users to forget to `permit`
+          their params. They would pass their params into Authentication::Logic, we'd call
           `to_h`, and they'd be surprised when authentication failed.
 
           In 2018, people are still making this mistake. We'd like to help them
-          and make auth-logic a little simpler at the same time, so in Auth::Logic
+          and make auth-logic a little simpler at the same time, so in Authentication::Logic
           3.7.0, we deprecated the use of ActionController::Parameters. Instead,
           pass a plain Hash. Please replace:
 
@@ -469,9 +469,9 @@ module Auth
           # This MUST be set before anything can be done. Similar to how
           # ActiveRecord won't allow you to do anything without establishing a DB
           # connection. In your framework environment this is done for you, but if
-          # you are using Auth::Logic outside of your framework, you need to assign
-          # a controller object to Auth::Logic via
-          # Auth::Logic::Session::Base.controller = obj. See the controller= method
+          # you are using Authentication::Logic outside of your framework, you need to assign
+          # a controller object to Authentication::Logic via
+          # Authentication::Logic::Session::Base.controller = obj. See the controller= method
           # for more information.
           def activated?
             !controller.nil?
@@ -502,12 +502,12 @@ module Auth
             RequestStore.store[:auth_logic_controller]
           end
 
-          # This accepts a controller object wrapped with the Auth::Logic controller
+          # This accepts a controller object wrapped with the Authentication::Logic controller
           # adapter. The controller adapters close the gap between the different
-          # controllers in each framework. That being said, Auth::Logic is expecting
+          # controllers in each framework. That being said, Authentication::Logic is expecting
           # your object's class to extend
-          # Auth::Logic::ControllerAdapters::AbstractAdapter. See
-          # Auth::Logic::ControllerAdapters for more info.
+          # Authentication::Logic::ControllerAdapters::AbstractAdapter. See
+          # Authentication::Logic::ControllerAdapters for more info.
           #
           # Lastly, this is thread safe.
           def controller=(value)
@@ -601,7 +601,7 @@ module Auth
           # This is how you persist a session. This finds the record for the
           # current session using a variety of methods. It basically tries to "log
           # in" the user without the user having to explicitly log in. Check out
-          # the other Auth::Logic::Session modules for more information.
+          # the other Authentication::Logic::Session modules for more information.
           #
           # The best way to use this method is something like:
           #
@@ -640,7 +640,7 @@ module Auth
           # p2.save # Raises an ActiveRecord::StaleObjectError
           # ```
           #
-          # Now, consider the following Auth::Logic scenario:
+          # Now, consider the following Authentication::Logic scenario:
           #
           # ```
           # User.log_in_after_password_change = true
@@ -651,7 +651,7 @@ module Auth
           # ben.save
           # ```
           #
-          # We've used one of Auth::Logic's session maintenance features,
+          # We've used one of Authentication::Logic's session maintenance features,
           # `log_in_after_password_change`. So, when we call `ben.save`, there is a
           # `before_save` callback that logs Ben in (`UserSession.find`). Well, when
           # we log Ben in, we update his user record, eg. `login_count`. When we're
@@ -685,7 +685,7 @@ module Auth
           #
           # Example of use:
           #
-          #   class UserSession < Auth::Logic::Session::Base
+          #   class UserSession < Authentication::Logic::Session::Base
           #     generalize_credentials_error_messages true
           #   end
           #
@@ -777,9 +777,9 @@ module Auth
             @klass_name = name.scan(/(.*)Session/)[0]&.first
           end
 
-          # The name of the method you want Auth::Logic to create for storing the
+          # The name of the method you want Authentication::Logic to create for storing the
           # login / username. Keep in mind this is just for your
-          # Auth::Logic::Session, if you want it can be something completely
+          # Authentication::Logic::Session, if you want it can be something completely
           # different than the field in your model. So if you wanted people to
           # login with a field called "login" and then find users by email this is
           # completely doable. See the `record_selection_method` configuration
@@ -866,7 +866,7 @@ module Auth
           end
           alias password_field= password_field
 
-          # Auth::Logic tries to validate the credentials passed to it. One part of
+          # Authentication::Logic tries to validate the credentials passed to it. One part of
           # validation is actually finding the user and making sure it exists.
           # What method it uses the do this is up to you.
           #
@@ -1659,14 +1659,14 @@ module Auth
         # credentials (`cookie_key`).
         #
         # @api private
-        # @return ::Auth::Logic::CookieCredentials or if no cookie is found, nil
+        # @return ::Authentication::Logic::CookieCredentials or if no cookie is found, nil
         def cookie_credentials
           return unless cookie_enabled?
 
           cookie_value = cookie_jar[cookie_key]
           return if cookie_value.nil?
 
-          ::Auth::Logic::CookieCredentials.parse(cookie_value)
+          ::Authentication::Logic::CookieCredentials.parse(cookie_value)
         end
 
         def cookie_enabled?
@@ -1812,7 +1812,7 @@ module Auth
         end
 
         def generate_cookie_value
-          ::Auth::Logic::CookieCredentials.new(
+          ::Authentication::Logic::CookieCredentials.new(
             record.persistence_token,
             record.send(record.class.primary_key),
             remember_me? ? remember_me_until : nil

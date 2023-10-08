@@ -2,7 +2,7 @@
 
 require "digest/md5"
 
-module Auth
+module Authentication
   module Logic
     module CryptoProviders
       # A poor choice. There are known attacks against this algorithm.

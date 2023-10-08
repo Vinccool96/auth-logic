@@ -2,7 +2,7 @@
 
 require "digest/sha1"
 
-module Auth
+module Authentication
   module Logic
     module CryptoProviders
       class Sha1

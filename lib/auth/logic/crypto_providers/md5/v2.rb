@@ -2,7 +2,7 @@
 
 require "digest/md5"
 
-module Auth
+module Authentication
   module Logic
     module CryptoProviders
       class MD5

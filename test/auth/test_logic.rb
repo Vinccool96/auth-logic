@@ -2,10 +2,10 @@
 
 require "test_helper"
 
-module Auth
+module Authentication
   class TestLogic < Minitest::Test
     def test_that_it_has_a_version_number
-      refute_nil ::Auth::Logic::VERSION
+      refute_nil ::Authentication::Logic::VERSION
     end
 
     def test_it_does_something_useful

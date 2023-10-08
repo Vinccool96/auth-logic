@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     # Generates random strings using ruby's SecureRandom library.
     module Random

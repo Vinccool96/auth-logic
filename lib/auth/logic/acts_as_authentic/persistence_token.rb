@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # Maintains the persistence token, the token responsible for persisting sessions. This token
@@ -21,7 +21,7 @@ module Auth
 
               # If the table does not have a password column, then
               # `after_password_set` etc. will not be defined. See
-              # `Auth::Logic::ActsAsAuthentic::Password::Callbacks.included`
+              # `Authentication::Logic::ActsAsAuthentic::Password::Callbacks.included`
               if respond_to?(:after_password_set) && respond_to?(:after_password_verification)
                 after_password_set :reset_persistence_token
                 after_password_verification :reset_persistence_token!, if: :reset_persistence_token?
@@ -49,7 +49,7 @@ module Auth
           module InstanceMethods
             # Resets the persistence_token field to a random hex value.
             def reset_persistence_token
-              self.persistence_token = Auth::Logic::Random.hex_token
+              self.persistence_token = Authentication::Logic::Random.hex_token
             end
 
             # Same as reset_persistence_token, but then saves the record.

@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       module Queries
         # @api private
         class CaseSensitivity
           E_UNABLE_TO_DETERMINE_SENSITIVITY = <<~EOS
-            Auth::Logic was unable to determine what case-sensitivity to use when
+            Authentication::Logic was unable to determine what case-sensitivity to use when
             searching for email/login. To specify a sensitivity, validate the
             uniqueness of the email/login and use the `case_sensitive` option,
             like this:
 
                 validates :email, uniqueness: { case_sensitive: false }
 
-            Auth::Logic will now perform a case-insensitive query.
+            Authentication::Logic will now perform a case-insensitive query.
           EOS
 
           # @api private

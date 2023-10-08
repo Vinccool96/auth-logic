@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module I18n
       # The default translator used by auth/logic/i18n.rb

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Auth::Logic bridge for Sinatra
-module Auth
+# Authentication::Logic bridge for Sinatra
+module Authentication
   module Logic
     module ControllerAdapters
       module SinatraAdapter
@@ -56,7 +56,7 @@ module Auth
             def self.included(klass)
               klass.send :before do
                 controller = Controller.new(request, response)
-                Auth::Logic::Session::Base.controller = Adapter.new(controller)
+                Authentication::Logic::Session::Base.controller = Adapter.new(controller)
               end
             end
           end
@@ -66,4 +66,4 @@ module Auth
   end
 end
 
-Sinatra::Base.include Auth::Logic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
+Sinatra::Base.include Authentication::Logic::ControllerAdapters::SinatraAdapter::Adapter::Implementation

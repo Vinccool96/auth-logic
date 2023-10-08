@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # This module has a lot of neat functionality. It is responsible for encrypting your
@@ -66,7 +66,7 @@ module Auth
           # Think about a profile page, where the user can edit all of their information,
           # including changing their password. If they do not want to change their password
           # they just leave the fields blank. This will try to set the password to a blank
-          # value, in which case is incorrect behavior. As such, Auth::Logic ignores this. But
+          # value, in which case is incorrect behavior. As such, Authentication::Logic ignores this. But
           # let's say you have a completely separate page for resetting passwords, you might
           # not want to ignore blank passwords. If this is the case for you, then just set
           # this value to false.
@@ -97,7 +97,7 @@ module Auth
           alias check_passwords_against_database= check_passwords_against_database
 
           # The class you want to use to encrypt and verify your encrypted
-          # passwords. See the Auth::Logic::CryptoProviders module for more info on
+          # passwords. See the Authentication::Logic::CryptoProviders module for more info on
           # the available methods and how to create your own.
           #
           # The family of adaptive hash functions (BCrypt, SCrypt, PBKDF2) is the
@@ -111,7 +111,7 @@ module Auth
           # pain.
           #
           # * <tt>Default:</tt> There is no longer a default value. Prior to
-          #   Auth::Logic 6, the default was `CryptoProviders::SCrypt`. If you try
+          #   Authentication::Logic 6, the default was `CryptoProviders::SCrypt`. If you try
           #   to read this config option before setting it, it will raise a
           #   `NilCryptoProvider` error. See that error's message for further
           #   details, and rationale for this change.
@@ -132,8 +132,8 @@ module Auth
           # Let's say you originally encrypted your passwords with Sha1. Sha1 is
           # starting to join the party with MD5 and you want to switch to
           # something stronger. No problem, just specify your new and improved
-          # algorithm with the crypt_provider option and then let Auth::Logic know
-          # you are transitioning from Sha1 using this option. Auth::Logic will take
+          # algorithm with the crypt_provider option and then let Authentication::Logic know
+          # you are transitioning from Sha1 using this option. Authentication::Logic will take
           # care of everything, including transitioning your users to the new
           # algorithm. The next time a user logs in, they will be granted access
           # using the old algorithm and their password will be resaved with the
@@ -201,7 +201,7 @@ module Auth
 
               run_callbacks :password_set do
                 @password = pass
-                send("#{password_salt_field}=", Auth::Logic::Random.friendly_token) if password_salt_field
+                send("#{password_salt_field}=", Authentication::Logic::Random.friendly_token) if password_salt_field
                 send(
                   "#{crypted_password_field}=",
                   crypto_provider.encrypt(*encrypt_arguments(@password, false))
@@ -245,7 +245,7 @@ module Auth
 
             # Resets the password to a random friendly token.
             def reset_password
-              friendly_token = Auth::Logic::Random.friendly_token
+              friendly_token = Authentication::Logic::Random.friendly_token
               self.password = friendly_token
               self.password_confirmation = friendly_token if self.class.require_password_confirmation
             end

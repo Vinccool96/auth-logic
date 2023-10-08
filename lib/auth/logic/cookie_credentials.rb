@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     # Represents the credentials *in* the cookie. The value of the cookie.
     # This is primarily a data object. It doesn't interact with controllers.

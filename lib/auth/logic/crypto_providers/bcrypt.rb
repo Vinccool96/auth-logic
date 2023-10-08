@@ -2,7 +2,7 @@
 
 require "bcrypt"
 
-module Auth
+module Authentication
   module Logic
     module CryptoProviders
       # The family of adaptive hash functions (BCrypt, SCrypt, PBKDF2)
@@ -50,7 +50,7 @@ module Auth
       # Tell acts_as_authentic to use it:
       #
       #   acts_as_authentic do |c|
-      #     c.crypto_provider = Auth::Logic::CryptoProviders::BCrypt
+      #     c.crypto_provider = Authentication::Logic::CryptoProviders::BCrypt
       #   end
       #
       # You are good to go!
@@ -67,7 +67,7 @@ module Auth
 
           def cost=(val)
             if val < ::BCrypt::Engine::MIN_COST
-              raise ArgumentError, "Auth::Logic's bcrypt cost cannot be set below the engine's " \
+              raise ArgumentError, "Authentication::Logic's bcrypt cost cannot be set below the engine's " \
                   "min cost (#{::BCrypt::Engine::MIN_COST})"
             end
             @cost = val
@@ -87,7 +87,7 @@ module Auth
             hash == join_tokens(tokens)
           end
 
-          # This method is used as a flag to tell Auth::Logic to "resave" the
+          # This method is used as a flag to tell Authentication::Logic to "resave" the
           # password upon a successful login, using the new cost
           def cost_matches?(hash)
             hash = new_from_hash(hash)

@@ -2,7 +2,7 @@
 
 require "digest/sha2"
 
-module Auth
+module Authentication
   module Logic
     module CryptoProviders
       class Sha512

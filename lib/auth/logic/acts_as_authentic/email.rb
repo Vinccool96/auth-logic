@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # Sometimes models won't have an explicit "login" or "username" field.
       # Instead they want to use the email field. In this case, auth-logic provides
       # validations to make sure the email submited is actually a valid email.
-      # Don't worry, if you do have a login or username field, Auth::Logic will
+      # Don't worry, if you do have a login or username field, Authentication::Logic will
       # still validate your email field. One less thing you have to worry about.
       module Email
         def self.included(klass)
@@ -15,7 +15,7 @@ module Auth
           end
         end
 
-        # Configuration to modify how Auth::Logic handles the email field.
+        # Configuration to modify how Authentication::Logic handles the email field.
         module Config
           # The name of the field that stores email addresses.
           #

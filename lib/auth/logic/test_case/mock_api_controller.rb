@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module TestCase
       # Basically acts like an API controller but doesn't do anything.
-      # Auth::Logic can interact with this, do it's thing and then you can look at
+      # Authentication::Logic can interact with this, do it's thing and then you can look at
       # the controller object to see if anything changed.
       class MockAPIController < ControllerAdapters::AbstractAdapter
         attr_writer :request_content_type
@@ -39,8 +39,8 @@ module Auth
         end
 
         # If method is defined, it causes below behavior...
-        #   controller = Auth::Logic::ControllerAdapters::RailsAdapter.new(
-        #     Auth::Logic::TestCase::MockAPIController.new
+        #   controller = Authentication::Logic::ControllerAdapters::RailsAdapter.new(
+        #     Authentication::Logic::TestCase::MockAPIController.new
         #   )
         #   controller.responds_to_single_access_allowed? #=> true
         #   controller.single_access_allowed?

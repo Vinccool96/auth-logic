@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # Provides the base functionality for acts_as_authentic
@@ -9,7 +9,7 @@ module Auth
           klass.class_eval do
             class_attribute :acts_as_authentic_modules
             self.acts_as_authentic_modules ||= []
-            extend Auth::Logic::Config
+            extend Authentication::Logic::Config
             extend Config
           end
         end
@@ -18,7 +18,7 @@ module Auth
         # auth-logic. These methods become class methods of ::ActiveRecord::Base.
         module Config
           # This includes a lot of helpful methods for authenticating records
-          # which the Auth::Logic::Session module relies on. To use it just do:
+          # which the Authentication::Logic::Session module relies on. To use it just do:
           #
           #   class User < ApplicationRecord
           #     acts_as_authentic
@@ -38,14 +38,14 @@ module Auth
             acts_as_authentic_modules.each { |mod| include mod }
           end
 
-          # Since this part of Auth::Logic deals with another class, ActiveRecord,
+          # Since this part of Authentication::Logic deals with another class, ActiveRecord,
           # we can't just start including things in ActiveRecord itself. A lot of
           # these module includes need to be triggered by the acts_as_authentic
           # method call. For example, you don't want to start adding in email
           # validations and what not into a model that has nothing to do with
-          # Auth::Logic.
+          # Authentication::Logic.
           #
-          # That being said, this is your tool for extending Auth::Logic and
+          # That being said, this is your tool for extending Authentication::Logic and
           # "hooking" into the acts_as_authentic call.
           def add_acts_as_authentic_module(mod, action = :append)
             modules = acts_as_authentic_modules.clone
@@ -67,10 +67,10 @@ module Auth
             self.acts_as_authentic_modules = modules
           end
 
-          # Some Auth::Logic modules requires a database connection with a existing
+          # Some Authentication::Logic modules requires a database connection with a existing
           # users table by the moment when you call the `acts_as_authentic`
           # method. If you try to call `acts_as_authentic` without a database
-          # connection, it will raise a `Auth::Logic::ModelSetupError`.
+          # connection, it will raise a `Authentication::Logic::ModelSetupError`.
           #
           # If you rely on the User model before the database is setup correctly,
           # set this field to false.
@@ -106,13 +106,13 @@ module Auth
   end
 end
 
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::Base
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::Email
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::LoggedInStatus
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::Login
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::MagicColumns
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::Password
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::PerishableToken
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::PersistenceToken
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::SessionMaintenance
-::ActiveRecord::Base.include Auth::Logic::ActsAsAuthentic::SingleAccessToken
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::Base
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::Email
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::LoggedInStatus
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::Login
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::MagicColumns
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::Password
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::PerishableToken
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::PersistenceToken
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::SessionMaintenance
+::ActiveRecord::Base.include Authentication::Logic::ActsAsAuthentic::SingleAccessToken

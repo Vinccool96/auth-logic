@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ControllerAdapters
       # Adapts auth-logic to work with rails. The point is to close the gap between
@@ -26,7 +26,7 @@ module Auth
           request.format.to_s
         end
 
-        # Lets Auth::Logic know about the controller object via a before filter, AKA
+        # Lets Authentication::Logic know about the controller object via a before filter, AKA
         # "activates" auth-logic.
         module RailsImplementation
           def self.included(klass) # :nodoc:
@@ -36,7 +36,7 @@ module Auth
           private
 
           def activate_auth_logic
-            Auth::Logic::Session::Base.controller = RailsAdapter.new(self)
+            Authentication::Logic::Session::Base.controller = RailsAdapter.new(self)
           end
         end
       end
@@ -45,5 +45,5 @@ module Auth
 end
 
 ActiveSupport.on_load(:action_controller) do
-  include Auth::Logic::ControllerAdapters::RailsAdapter::RailsImplementation
+  include Authentication::Logic::ControllerAdapters::RailsAdapter::RailsImplementation
 end

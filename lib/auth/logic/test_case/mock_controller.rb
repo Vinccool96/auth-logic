@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module TestCase
-      # Basically acts like a controller but doesn't do anything. Auth::Logic can interact
+      # Basically acts like a controller but doesn't do anything. Authentication::Logic can interact
       # with this, do it's thing and then you can look at the controller object to see if
       # anything changed.
       class MockController < ControllerAdapters::AbstractAdapter

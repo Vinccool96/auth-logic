@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     # The acts_as_authentic method has a crypto_provider option. This allows you
     # to use any type of encryption you like. Just create a class with a class
@@ -33,13 +33,13 @@ module Auth
 
       # Guide users to choose a better crypto provider.
       class Guidance
-        BUILTIN_PROVIDER_PREFIX = "Auth::Logic::CryptoProviders::"
+        BUILTIN_PROVIDER_PREFIX = "Authentication::Logic::CryptoProviders::"
         NONADAPTIVE_ALGORITHM = <<~EOS
           You have selected %s as your auth-logic crypto provider. This algorithm
           does not have any practical known attacks against it. However, there are
           better choices.
 
-          Auth::Logic has no plans yet to deprecate this crypto provider. However,
+          Authentication::Logic has no plans yet to deprecate this crypto provider. However,
           we recommend transitioning to a more secure, adaptive hashing algorithm,
           like scrypt. Adaptive algorithms are designed to slow down brute force
           attacks, and over time the iteration count can be increased to make it
@@ -53,7 +53,7 @@ module Auth
           You have selected %s as your auth-logic crypto provider. It is a poor
           choice because there are known attacks against this algorithm.
 
-          Auth::Logic has no plans yet to deprecate this crypto provider. However,
+          Authentication::Logic has no plans yet to deprecate this crypto provider. However,
           we recommend transitioning to a secure hashing algorithm. We recommend
           an adaptive algorithm, like scrypt.
 

@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in auth-logic.gemspec
+# Specify your gem's dependencies in authentication-logic.gemspec
 gemspec
 
 gem "rake", "~> 13.0"

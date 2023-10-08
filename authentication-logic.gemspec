@@ -4,7 +4,7 @@ require_relative "lib/auth/logic/version"
 
 Gem::Specification.new do |spec|
   spec.name = "auth-logic"
-  spec.version = Auth::Logic::VERSION
+  spec.version = Authentication::Logic::VERSION
   spec.authors = ["Vincent Girard"]
   spec.email = ["vinccool96@gmail.com"]
 
@@ -43,7 +43,7 @@ Gem::Specification.new do |spec|
   # Tests are intentionally excluded. We only support our own test suite, we do
   # not have enough volunteers to support "in-situ" testing.
   spec.files = `git ls-files -z`.split("\x0").select do |f|
-    f.match(%r{^(LICENSE|lib|auth-logic.gemspec)/})
+    f.match(%r{^(LICENSE|lib|authentication-logic.gemspec)/})
   end
   spec.test_files = [] # not packaged, see above
   spec.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }

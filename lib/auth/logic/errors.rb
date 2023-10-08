@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
-    # Parent class of all Auth::Logic errors.
+    # Parent class of all Authentication::Logic errors.
     class Error < StandardError
     end
 
@@ -14,21 +14,21 @@ module Auth
     class NilCryptoProvider < InvalidCryptoProvider
       def message
         <<~EOS
-          In version 5, Auth::Logic used SCrypt by default. As of version 6, there
+          In version 5, Authentication::Logic used SCrypt by default. As of version 6, there
           is no default. We still recommend SCrypt. If you previously relied on
           this default, then, in your User model (or equivalent), please set the
           following:
 
               acts_as_authentic do |c|
-                c.crypto_provider = ::Auth::Logic::CryptoProviders::SCrypt
+                c.crypto_provider = ::Authentication::Logic::CryptoProviders::SCrypt
               end
 
-          Furthermore, the Auth::Logic gem no longer depends on the scrypt gem. In
+          Furthermore, the Authentication::Logic gem no longer depends on the scrypt gem. In
           your Gemfile, please add scrypt.
 
               gem "scrypt", "~> 3.0"
 
-          We have made this change in Auth::Logic 6 so that users of other crypto
+          We have made this change in Authentication::Logic 6 so that users of other crypto
           providers no longer need to install the scrypt gem.
         EOS
       end

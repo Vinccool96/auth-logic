@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ControllerAdapters # :nodoc:
-      # Allows you to use Auth::Logic in any framework you want, not just rails. See
-      # the RailsAdapter for an example of how to adapt Auth::Logic to work with
+      # Allows you to use Authentication::Logic in any framework you want, not just rails. See
+      # the RailsAdapter for an example of how to adapt Authentication::Logic to work with
       # your framework.
       class AbstractAdapter
         E_COOKIE_DOMAIN_ADAPTER = "The cookie_domain method has not been " \

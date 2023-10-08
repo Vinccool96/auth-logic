@@ -3,7 +3,7 @@
 require "auth/logic/acts_as_authentic/queries/case_sensitivity"
 require "auth/logic/acts_as_authentic/queries/find_with_case"
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # Handles everything related to the login field.

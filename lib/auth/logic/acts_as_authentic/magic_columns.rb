@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # Magic columns are like ActiveRecord's created_at and updated_at columns.
-      # They are "magically" maintained for you. Auth::Logic has the same thing, but
+      # They are "magically" maintained for you. Authentication::Logic has the same thing, but
       # these are maintained on the session side. Please see "Magic Columns" in
       # `Session::Base` for more details. This module merely adds validations for
       # the magic columns if they exist.

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ActsAsAuthentic
       # This provides a handy token that is "perishable", meaning the token is
@@ -11,8 +11,8 @@ module Auth
       # the token and do what they need to do, that token should expire.
       #
       # Don't worry about maintaining the token, changing it, or expiring it
-      # yourself. Auth::Logic does all of this for you. See the sub modules for all
-      # of the tools Auth::Logic provides to you.
+      # yourself. Authentication::Logic does all of this for you. See the sub modules for all
+      # of the tools Authentication::Logic provides to you.
       module PerishableToken
         def self.included(klass)
           klass.class_eval do
@@ -38,7 +38,7 @@ module Auth
           end
           alias perishable_token_valid_for= perishable_token_valid_for
 
-          # Auth::Logic tries to expire and change the perishable token as much as
+          # Authentication::Logic tries to expire and change the perishable token as much as
           # possible, without compromising its purpose. If you want to manage it
           # yourself, set this to true.
           #

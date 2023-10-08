@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
-    # Mixed into `Auth::Logic::ActsAsAuthentic::Base` and
-    # `Auth::Logic::Session::Base`.
+    # Mixed into `Authentication::Logic::ActsAsAuthentic::Base` and
+    # `Authentication::Logic::Session::Base`.
     module Config
       E_USE_NORMAL_RAILS_VALIDATION = <<~EOS
-        This Auth::Logic configuration option (%s) is deprecated. Use normal
+        This Authentication::Logic configuration option (%s) is deprecated. Use normal
         ActiveRecord validation instead. Detailed instructions:
         https://github.com/vinccool96/auth-logic/blob/master/doc/use_normal_rails_validation.md
       EOS

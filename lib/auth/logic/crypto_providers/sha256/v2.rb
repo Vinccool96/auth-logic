@@ -2,7 +2,7 @@
 
 require "digest/sha2"
 
-module Auth
+module Authentication
   module Logic
     # The acts_as_authentic method has a crypto_provider option. This allows you
     # to use any type of encryption you like. Just create a class with a class

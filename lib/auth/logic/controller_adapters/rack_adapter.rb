@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Auth
+module Authentication
   module Logic
     module ControllerAdapters
       # Adapter for auth-logic to make it function as a Rack middleware.
       # First you'll have write your own Rack adapter where you have to set your cookie domain.
       #
-      #     class YourRackAdapter < Auth::Logic::ControllerAdapters::RackAdapter
+      #     class YourRackAdapter < Authentication::Logic::ControllerAdapters::RackAdapter
       #       def cookie_domain
       #         'your_cookie_domain_here.com'
       #       end
@@ -14,7 +14,7 @@ module Auth
       #
       # Next you need to set up a rack middleware like this:
       #
-      #     class Auth::LogicMiddleware
+      #     class Authentication::LogicMiddleware
       #       def initialize(app)
       #         @app = app
       #       end
@@ -27,12 +27,12 @@ module Auth
       #
       # And that is all! Now just load this middleware into rack:
       #
-      #     use Auth::LogicMiddleware
+      #     use Authentication::LogicMiddleware
       #
-      # Auth::Logic will expect a User and a UserSession object to be present:
+      # Authentication::Logic will expect a User and a UserSession object to be present:
       #
-      #     class UserSession < Auth::Logic::Session::Base
-      #       # Auth::Logic options go here
+      #     class UserSession < Authentication::Logic::Session::Base
+      #       # Authentication::Logic options go here
       #     end
       #
       #     class User < ApplicationRecord
@@ -56,11 +56,11 @@ module Auth
           end
 
           super(request)
-          Auth::Logic::Session::Base.controller = self
+          Authentication::Logic::Session::Base.controller = self
         end
 
         # Rack Requests stores cookies with not just the value, but also with
-        # flags and expire information in the hash. Auth::Logic does not like this,
+        # flags and expire information in the hash. Authentication::Logic does not like this,
         # so we drop everything except the cookie value.
         def cookies
           controller

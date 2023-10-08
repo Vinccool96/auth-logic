@@ -7,7 +7,7 @@ require "#{File.dirname(__FILE__)}/test_case/mock_controller"
 require "#{File.dirname(__FILE__)}/test_case/mock_logger"
 require "#{File.dirname(__FILE__)}/test_case/mock_request"
 
-module Auth
+module Authentication
   module Logic
     # This module is a collection of methods and classes that help you easily test
     # Authlogic. In fact, I use these same tools to test the internals of
