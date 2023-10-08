@@ -5,7 +5,7 @@ require "active_support/all"
 
 require "active_record"
 
-path = "#{File.dirname(__FILE__)}/auth/logic/"
+path = "#{File.dirname(__FILE__)}/logic/"
 
 [
   "errors",
