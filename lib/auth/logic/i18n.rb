@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "auth/logic/i18n/translator"
+
 module Authentication
   module Logic
     # This class allows any message in Authentication::Logic to use internationalization. In
